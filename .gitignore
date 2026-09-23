@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+
+# Xcode
+xcuserdata/
+*.xcuserstate
+build/
+DerivedData/
+
+# Swift Package Manager (the MiliCore test package)
+.build/
+.swiftpm/
+
+# Release output (DMGs, appcast) — published as GitHub release assets
+dist/
+*.dmg
+*.xcarchive
+
+# Old prototype, kept locally for reference only
+_Legacy/
+
+# Never commit update-signing key exports
+*update-key*.txt

@@ -1,0 +1,72 @@
+<svg width="660" height="400" viewBox="0 0 660 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- MiliControl installer window (660×400).
+       The DMG script places the icons (112 px) centred at (170, 205) for the
+       app and (490, 205) for Applications; Finder draws their names below.
+       Each sits on a mid-tone card so the name is readable in both Light Mode
+       (black text) and Dark Mode (white text). -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#1F2430"/>
+      <stop offset="1" stop-color="#0F1218"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.45" r="0.6">
+      <stop offset="0" stop-color="#3B82F6" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#3B82F6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7A8497"/>
+      <stop offset="1" stop-color="#666F82"/>
+    </linearGradient>
+    <linearGradient id="arrow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#60A5FA"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- background + soft blue glow -->
+  <rect width="660" height="400" fill="url(#bg)"/>
+  <ellipse cx="330" cy="210" rx="320" ry="190" fill="url(#glow)"/>
+
+  <!-- faint grid motif (the app's rows of desktops) -->
+  <g fill="#FFFFFF" fill-opacity="0.035">
+    <rect x="24" y="24" width="34" height="22" rx="4"/><rect x="64" y="24" width="34" height="22" rx="4"/>
+    <rect x="24" y="52" width="34" height="22" rx="4"/>
+    <rect x="562" y="326" width="34" height="22" rx="4"/><rect x="602" y="326" width="34" height="22" rx="4"/>
+    <rect x="602" y="354" width="34" height="22" rx="4"/>
+  </g>
+
+  <!-- title -->
+  <text x="330" y="56" text-anchor="middle"
+        font-family="-apple-system, 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-size="26" font-weight="700" fill="#FFFFFF">MiliControl</text>
+  <text x="330" y="82" text-anchor="middle"
+        font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-size="13" fill="#FFFFFF" fill-opacity="0.6">Your desktops, arranged in rows</text>
+
+  <!-- cards behind the two icons -->
+  <g filter="url(#shadow)">
+    <rect x="80" y="116" width="180" height="196" rx="22" fill="url(#card)"/>
+    <rect x="400" y="116" width="180" height="196" rx="22" fill="url(#card)"/>
+  </g>
+  <g fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="1">
+    <rect x="80.5" y="116.5" width="179" height="195" rx="21.5"/>
+    <rect x="400.5" y="116.5" width="179" height="195" rx="21.5"/>
+  </g>
+
+  <!-- arrow -->
+  <g filter="url(#shadow)">
+    <path d="M 283 199 L 347 199 L 347 186 L 377 205 L 347 224 L 347 211 L 283 211 Q 277 211 277 205 Q 277 199 283 199 Z"
+          fill="url(#arrow)"/>
+  </g>
+
+  <!-- instructions -->
+  <text x="330" y="350" text-anchor="middle"
+        font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-size="15" font-weight="600" fill="#FFFFFF" fill-opacity="0.92">Drag MiliControl onto Applications</text>
+  <text x="330" y="373" text-anchor="middle"
+        font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-size="12" fill="#FFFFFF" fill-opacity="0.5">Then open it from Applications — a short setup checklist guides you.</text>
+</svg>

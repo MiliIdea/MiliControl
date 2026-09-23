@@ -1,0 +1,497 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0404531B83E8ED68662A2C32 /* SystemPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B6BE3D09FAAD51E52B6D1B /* SystemPreferences.swift */; };
+		11BEAD12F98340E5ACD35759 /* TrackpadSwipes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F6D6878D1B5C018AE222AF /* TrackpadSwipes.swift */; };
+		14FB2658DAA29B4C8C24C6FC /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFAE49F371925868199D2BB5 /* StatusBarController.swift */; };
+		17301A1A67ED1E6D66F272F0 /* VisualEffectBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57BE6E683B5279DD7027CCE /* VisualEffectBackground.swift */; };
+		18D96D789DA2FF4CB2F6F529 /* HotKeyCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6095E73D229174ACAA0BB5AC /* HotKeyCenter.swift */; };
+		255ED560EA46393FBEAD21B2 /* LayoutStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E14A43A6C3F9164BAA50AB /* LayoutStore.swift */; };
+		270BEFABAFA26F4F68A57C6A /* LoginItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5940AABBD317B49E8292EA0D /* LoginItem.swift */; };
+		3DF8197A0CBDC1EFFE5116E0 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A82B17C2C3A3EDE0236416 /* main.swift */; };
+		3E8B41F53F329830DD71A50C /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 32610D3AC174D1D3789C7160 /* Sparkle */; };
+		44A523FDE133A07528A1F007 /* DesktopSnapshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34D5CEFE09F0E29C2918C86 /* DesktopSnapshots.swift */; };
+		470856F0EBB93DB5A10612F8 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8937CEFAAF22D7A73828801 /* GridLayout.swift */; };
+		50B998D0DD6FC386ECC1BA51 /* RoutePlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F300717BB4E05E0CE29A73 /* RoutePlanner.swift */; };
+		5B0003DD5FDB2C2AEA9FCA90 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DA204905F47308DC1A500 /* Navigator.swift */; };
+		698526EE3FC2445242338CCF /* SetupChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3FC644DE249CD0B35813D8 /* SetupChecker.swift */; };
+		6F1D575A15A9FF5734AAA90B /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5717F2C58BFBEC0B027037 /* SettingsWindowController.swift */; };
+		70FDDAE932A7F99A41237480 /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931DEDEDF996E82C3C48B3CA /* UpdateController.swift */; };
+		731F7EA5FF3939F324800D60 /* DockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD64B4038AD50A9A3DEB4DC /* DockController.swift */; };
+		842E3372BEAB6AB15D86BF17 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD48D891AA03D017AA64C118 /* SettingsView.swift */; };
+		8913DC269DC17EA23EF5A88D /* DockCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AF8DAEECEDE43409345922 /* DockCoordinator.swift */; };
+		8C7BE434899F5A16F13DEDCF /* SymbolicHotKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92F3EBC141E23C6FD2D044B /* SymbolicHotKeys.swift */; };
+		995E917AC45B3D3E0232DA64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B2972EBF759CC27D6BB63E /* AppDelegate.swift */; };
+		9D977102C3BF1EA542607CE6 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C26391A9012416DFF436D1 /* Preferences.swift */; };
+		A36B1B801D2A3B56BFE994DC /* DesktopStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAD39F8DFC77C31FD940039 /* DesktopStore.swift */; };
+		B16E5905F390B04D720ABA53 /* ScreenCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE6B68AF03CC74F3D2ACC22 /* ScreenCapture.swift */; };
+		C7B0E78C6F998825623A0D6F /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2C4CDBDE5302B10EE40C17 /* HUD.swift */; };
+		D5299187C4534B792E25CC95 /* CGSPrivate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874A5DD6ECAE60A7B158BDDF /* CGSPrivate.swift */; };
+		DBF20211162B5C9FC5EB4246 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8838C345EFD32F8C5C740FAB /* Assets.xcassets */; };
+		DD1265FC4DDDD157F97EB713 /* GridEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499E953550D49D4727225C3 /* GridEditorView.swift */; };
+		EC8BE548F99A9DEA7814C30A /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA31A4C43861F47DF99627B /* NavigationCoordinator.swift */; };
+		F64BF78B6B55B189FAC584ED /* DesktopSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108D57F00FB090C1E4362F34 /* DesktopSwitcher.swift */; };
+		F68939563557FCFCAF274079 /* GridEditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F7BB3EDEE28BED2CDF15EB /* GridEditorController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		571CD3829D85311D5626CD79 /* MiliControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiliControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		04A82B17C2C3A3EDE0236416 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		48B2972EBF759CC27D6BB63E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A5C26391A9012416DFF436D1 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		C7E14A43A6C3F9164BAA50AB /* LayoutStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutStore.swift; sourceTree = "<group>"; };
+		C8937CEFAAF22D7A73828801 /* GridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
+		5F4DA204905F47308DC1A500 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		78F300717BB4E05E0CE29A73 /* RoutePlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlanner.swift; sourceTree = "<group>"; };
+		874A5DD6ECAE60A7B158BDDF /* CGSPrivate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSPrivate.swift; sourceTree = "<group>"; };
+		5BAD39F8DFC77C31FD940039 /* DesktopStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopStore.swift; sourceTree = "<group>"; };
+		B92F3EBC141E23C6FD2D044B /* SymbolicHotKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolicHotKeys.swift; sourceTree = "<group>"; };
+		108D57F00FB090C1E4362F34 /* DesktopSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopSwitcher.swift; sourceTree = "<group>"; };
+		6095E73D229174ACAA0BB5AC /* HotKeyCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyCenter.swift; sourceTree = "<group>"; };
+		FE3FC644DE249CD0B35813D8 /* SetupChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupChecker.swift; sourceTree = "<group>"; };
+		5940AABBD317B49E8292EA0D /* LoginItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItem.swift; sourceTree = "<group>"; };
+		BFD64B4038AD50A9A3DEB4DC /* DockController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockController.swift; sourceTree = "<group>"; };
+		2FE6B68AF03CC74F3D2ACC22 /* ScreenCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCapture.swift; sourceTree = "<group>"; };
+		53B6BE3D09FAAD51E52B6D1B /* SystemPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemPreferences.swift; sourceTree = "<group>"; };
+		54F6D6878D1B5C018AE222AF /* TrackpadSwipes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackpadSwipes.swift; sourceTree = "<group>"; };
+		D57BE6E683B5279DD7027CCE /* VisualEffectBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectBackground.swift; sourceTree = "<group>"; };
+		6DA31A4C43861F47DF99627B /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
+		0D2C4CDBDE5302B10EE40C17 /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
+		69F7BB3EDEE28BED2CDF15EB /* GridEditorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridEditorController.swift; sourceTree = "<group>"; };
+		4499E953550D49D4727225C3 /* GridEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridEditorView.swift; sourceTree = "<group>"; };
+		BA5717F2C58BFBEC0B027037 /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
+		CD48D891AA03D017AA64C118 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		DFAE49F371925868199D2BB5 /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
+		F7AF8DAEECEDE43409345922 /* DockCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockCoordinator.swift; sourceTree = "<group>"; };
+		D34D5CEFE09F0E29C2918C86 /* DesktopSnapshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopSnapshots.swift; sourceTree = "<group>"; };
+		931DEDEDF996E82C3C48B3CA /* UpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateController.swift; sourceTree = "<group>"; };
+		8838C345EFD32F8C5C740FAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A8D71832F4DE9E5CC1308427 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		048A834BDEAC42AABCA280E1 /* MiliControl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MiliControl.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		09A82846EB709A06A7813A7E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E8B41F53F329830DD71A50C /* Sparkle in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BBD0BA62AAA3E55CD18A9949 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				04A82B17C2C3A3EDE0236416 /* main.swift */,
+				48B2972EBF759CC27D6BB63E /* AppDelegate.swift */,
+				A5C26391A9012416DFF436D1 /* Preferences.swift */,
+				C7E14A43A6C3F9164BAA50AB /* LayoutStore.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		597F516125F0EC32EF55EF79 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				C8937CEFAAF22D7A73828801 /* GridLayout.swift */,
+				5F4DA204905F47308DC1A500 /* Navigator.swift */,
+				78F300717BB4E05E0CE29A73 /* RoutePlanner.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		B1D07EAC72E8C1C72E2CF492 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				874A5DD6ECAE60A7B158BDDF /* CGSPrivate.swift */,
+				5BAD39F8DFC77C31FD940039 /* DesktopStore.swift */,
+				B92F3EBC141E23C6FD2D044B /* SymbolicHotKeys.swift */,
+				108D57F00FB090C1E4362F34 /* DesktopSwitcher.swift */,
+				6095E73D229174ACAA0BB5AC /* HotKeyCenter.swift */,
+				FE3FC644DE249CD0B35813D8 /* SetupChecker.swift */,
+				5940AABBD317B49E8292EA0D /* LoginItem.swift */,
+				BFD64B4038AD50A9A3DEB4DC /* DockController.swift */,
+				2FE6B68AF03CC74F3D2ACC22 /* ScreenCapture.swift */,
+				53B6BE3D09FAAD51E52B6D1B /* SystemPreferences.swift */,
+				54F6D6878D1B5C018AE222AF /* TrackpadSwipes.swift */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		8E1979FE367B6A3EF6263B4E /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				D57BE6E683B5279DD7027CCE /* VisualEffectBackground.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		D22670F74C3F7165BD51782C /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				6DA31A4C43861F47DF99627B /* NavigationCoordinator.swift */,
+				0D2C4CDBDE5302B10EE40C17 /* HUD.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		2FA0BA1216E8442DE950BA2A /* GridEditor */ = {
+			isa = PBXGroup;
+			children = (
+				69F7BB3EDEE28BED2CDF15EB /* GridEditorController.swift */,
+				4499E953550D49D4727225C3 /* GridEditorView.swift */,
+			);
+			path = GridEditor;
+			sourceTree = "<group>";
+		};
+		948BBE91CA96AA1566CDBCD8 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				BA5717F2C58BFBEC0B027037 /* SettingsWindowController.swift */,
+				CD48D891AA03D017AA64C118 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		09FF02DE8B08217FA0139F69 /* MenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				DFAE49F371925868199D2BB5 /* StatusBarController.swift */,
+			);
+			path = MenuBar;
+			sourceTree = "<group>";
+		};
+		8B9C148D837521DC2A7FA086 /* Dock */ = {
+			isa = PBXGroup;
+			children = (
+				F7AF8DAEECEDE43409345922 /* DockCoordinator.swift */,
+			);
+			path = Dock;
+			sourceTree = "<group>";
+		};
+		18205AD4B7A88D40FABE9C0E /* Previews */ = {
+			isa = PBXGroup;
+			children = (
+				D34D5CEFE09F0E29C2918C86 /* DesktopSnapshots.swift */,
+			);
+			path = Previews;
+			sourceTree = "<group>";
+		};
+		2B5B81DE6FA5431D22EFDCE5 /* Updates */ = {
+			isa = PBXGroup;
+			children = (
+				931DEDEDF996E82C3C48B3CA /* UpdateController.swift */,
+			);
+			path = Updates;
+			sourceTree = "<group>";
+		};
+		8C069D1F31ECD6B1D3E41D55 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				8E1979FE367B6A3EF6263B4E /* Shared */,
+				D22670F74C3F7165BD51782C /* Navigation */,
+				2FA0BA1216E8442DE950BA2A /* GridEditor */,
+				948BBE91CA96AA1566CDBCD8 /* Settings */,
+				09FF02DE8B08217FA0139F69 /* MenuBar */,
+				8B9C148D837521DC2A7FA086 /* Dock */,
+				18205AD4B7A88D40FABE9C0E /* Previews */,
+				2B5B81DE6FA5431D22EFDCE5 /* Updates */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		CBC5081932357E0B1DA62D93 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8838C345EFD32F8C5C740FAB /* Assets.xcassets */,
+				A8D71832F4DE9E5CC1308427 /* Info.plist */,
+				048A834BDEAC42AABCA280E1 /* MiliControl.entitlements */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		C069A4975F97BF3966F1983C /* MiliControl */ = {
+			isa = PBXGroup;
+			children = (
+				BBD0BA62AAA3E55CD18A9949 /* App */,
+				597F516125F0EC32EF55EF79 /* Core */,
+				B1D07EAC72E8C1C72E2CF492 /* System */,
+				8C069D1F31ECD6B1D3E41D55 /* Features */,
+				CBC5081932357E0B1DA62D93 /* Resources */,
+			);
+			path = MiliControl;
+			sourceTree = "<group>";
+		};
+		FAD58DE7366495DB4650CFEF = {
+			isa = PBXGroup;
+			children = (
+				C069A4975F97BF3966F1983C /* MiliControl */,
+				86024CAD1E83101D97359D73 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		86024CAD1E83101D97359D73 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				571CD3829D85311D5626CD79 /* MiliControl.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		42AEFBAE01D2DFD981F7DA7D /* MiliControl */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0C42E992F8137C5B02B02528 /* Build configuration list for PBXNativeTarget "MiliControl" */;
+			buildPhases = (
+				838248CAA0E23712048A3C4E /* Sources */,
+				09A82846EB709A06A7813A7E /* Frameworks */,
+				B38B8EFCFFAEB0E290034F10 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MiliControl;
+			packageProductDependencies = (
+				32610D3AC174D1D3789C7160 /* Sparkle */,
+			);
+			productName = MiliControl;
+			productReference = 571CD3829D85311D5626CD79 /* MiliControl.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		46F86FAA6BBF9AC94A7E4595 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					42AEFBAE01D2DFD981F7DA7D = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 24DF83E70DFC898B71CD8E2E /* Build configuration list for PBXProject "MiliControl" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FAD58DE7366495DB4650CFEF;
+			packageReferences = (
+				E4E1930A20331DF2D1507BC7 /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
+			productRefGroup = 86024CAD1E83101D97359D73 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				42AEFBAE01D2DFD981F7DA7D /* MiliControl */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B38B8EFCFFAEB0E290034F10 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DBF20211162B5C9FC5EB4246 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		838248CAA0E23712048A3C4E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DF8197A0CBDC1EFFE5116E0 /* main.swift in Sources */,
+				995E917AC45B3D3E0232DA64 /* AppDelegate.swift in Sources */,
+				9D977102C3BF1EA542607CE6 /* Preferences.swift in Sources */,
+				255ED560EA46393FBEAD21B2 /* LayoutStore.swift in Sources */,
+				470856F0EBB93DB5A10612F8 /* GridLayout.swift in Sources */,
+				5B0003DD5FDB2C2AEA9FCA90 /* Navigator.swift in Sources */,
+				50B998D0DD6FC386ECC1BA51 /* RoutePlanner.swift in Sources */,
+				D5299187C4534B792E25CC95 /* CGSPrivate.swift in Sources */,
+				A36B1B801D2A3B56BFE994DC /* DesktopStore.swift in Sources */,
+				8C7BE434899F5A16F13DEDCF /* SymbolicHotKeys.swift in Sources */,
+				F64BF78B6B55B189FAC584ED /* DesktopSwitcher.swift in Sources */,
+				18D96D789DA2FF4CB2F6F529 /* HotKeyCenter.swift in Sources */,
+				698526EE3FC2445242338CCF /* SetupChecker.swift in Sources */,
+				270BEFABAFA26F4F68A57C6A /* LoginItem.swift in Sources */,
+				731F7EA5FF3939F324800D60 /* DockController.swift in Sources */,
+				B16E5905F390B04D720ABA53 /* ScreenCapture.swift in Sources */,
+				0404531B83E8ED68662A2C32 /* SystemPreferences.swift in Sources */,
+				11BEAD12F98340E5ACD35759 /* TrackpadSwipes.swift in Sources */,
+				17301A1A67ED1E6D66F272F0 /* VisualEffectBackground.swift in Sources */,
+				EC8BE548F99A9DEA7814C30A /* NavigationCoordinator.swift in Sources */,
+				C7B0E78C6F998825623A0D6F /* HUD.swift in Sources */,
+				F68939563557FCFCAF274079 /* GridEditorController.swift in Sources */,
+				DD1265FC4DDDD157F97EB713 /* GridEditorView.swift in Sources */,
+				6F1D575A15A9FF5734AAA90B /* SettingsWindowController.swift in Sources */,
+				842E3372BEAB6AB15D86BF17 /* SettingsView.swift in Sources */,
+				14FB2658DAA29B4C8C24C6FC /* StatusBarController.swift in Sources */,
+				8913DC269DC17EA23EF5A88D /* DockCoordinator.swift in Sources */,
+				44A523FDE133A07528A1F007 /* DesktopSnapshots.swift in Sources */,
+				70FDDAE932A7F99A41237480 /* UpdateController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		6491CFB68F1E874022887852 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2A147A3AE087D4A96C232137 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		EE8A104B7DBDD17159DD623F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MiliControl/Resources/MiliControl.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 17;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = JK772YMH8E;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MiliControl/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mili.MiliControl;
+				PRODUCT_NAME = MiliControl;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		B7CC37230578BAFCDCB847BF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MiliControl/Resources/MiliControl.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 17;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = JK772YMH8E;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MiliControl/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mili.MiliControl;
+				PRODUCT_NAME = MiliControl;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		24DF83E70DFC898B71CD8E2E /* Build configuration list for PBXProject "MiliControl" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6491CFB68F1E874022887852 /* Debug */,
+				2A147A3AE087D4A96C232137 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0C42E992F8137C5B02B02528 /* Build configuration list for PBXNativeTarget "MiliControl" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EE8A104B7DBDD17159DD623F /* Debug */,
+				B7CC37230578BAFCDCB847BF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E4E1930A20331DF2D1507BC7 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		32610D3AC174D1D3789C7160 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E4E1930A20331DF2D1507BC7 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 46F86FAA6BBF9AC94A7E4595 /* Project object */;
+}

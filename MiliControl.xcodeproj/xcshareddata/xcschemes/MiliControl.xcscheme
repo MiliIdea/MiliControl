@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme LastUpgradeVersion = "1500" version = "1.7">
+   <BuildAction parallelizeBuildables = "YES" buildImplicitDependencies = "YES">
+      <PostActions>
+         <ExecutionAction ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent title = "Install to /Applications" scriptText = 'exec &gt; /tmp/MiliControl-install.log 2&gt;&amp;1&#10;set -e&#10;SRC="${BUILT_PRODUCTS_DIR}/${FULL_PRODUCT_NAME}"&#10;DST="/Applications/${FULL_PRODUCT_NAME}"&#10;if [ ! -d "$SRC" ]; then echo "No build product at $SRC"; exit 1; fi&#10;pkill -x "${PRODUCT_NAME}" || true&#10;sleep 0.5&#10;rm -rf "$DST"&#10;ditto "$SRC" "$DST"&#10;echo "Installed $DST from $SRC"&#10;'>
+               <EnvironmentBuildable>
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "42AEFBAE01D2DFD981F7DA7D"
+               BuildableName = "MiliControl.app"
+               BlueprintName = "MiliControl"
+               ReferencedContainer = "container:MiliControl.xcodeproj">
+            </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PostActions>
+      <BuildActionEntries>
+         <BuildActionEntry buildForTesting = "YES" buildForRunning = "YES" buildForProfiling = "YES" buildForArchiving = "YES" buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "42AEFBAE01D2DFD981F7DA7D"
+               BuildableName = "MiliControl.app"
+               BlueprintName = "MiliControl"
+               ReferencedContainer = "container:MiliControl.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction buildConfiguration = "Debug" selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB" shouldUseLaunchSchemeArgsEnv = "YES">
+   </TestAction>
+   <LaunchAction buildConfiguration = "Debug" selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB" launchStyle = "0" useCustomWorkingDirectory = "NO" ignoresPersistentStateOnLaunch = "NO" debugDocumentVersioning = "YES" debugServiceExtension = "internal" allowLocationSimulation = "YES">
+      <PathRunnable runnableDebuggingMode = "0" FilePath = "/Applications/MiliControl.app">
+      </PathRunnable>
+      <MacroExpansion>
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "42AEFBAE01D2DFD981F7DA7D"
+               BuildableName = "MiliControl.app"
+               BlueprintName = "MiliControl"
+               ReferencedContainer = "container:MiliControl.xcodeproj">
+            </BuildableReference>
+      </MacroExpansion>
+   </LaunchAction>
+   <ProfileAction buildConfiguration = "Release" shouldUseLaunchSchemeArgsEnv = "YES" savedToolIdentifier = "" useCustomWorkingDirectory = "NO" debugDocumentVersioning = "YES">
+      <BuildableProductRunnable runnableDebuggingMode = "0">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "42AEFBAE01D2DFD981F7DA7D"
+               BuildableName = "MiliControl.app"
+               BlueprintName = "MiliControl"
+               ReferencedContainer = "container:MiliControl.xcodeproj">
+            </BuildableReference>
+      </BuildableProductRunnable>
+   </ProfileAction>
+   <AnalyzeAction buildConfiguration = "Debug">
+   </AnalyzeAction>
+   <ArchiveAction buildConfiguration = "Release" revealArchiveInOrganizer = "YES">
+   </ArchiveAction>
+</Scheme>
