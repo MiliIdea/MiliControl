@@ -84,7 +84,7 @@ final class DockCoordinator {
         }
 
         // On a fullscreen app (not a numbered desktop) leave the Dock alone.
-        guard let current = desktops.currentKey else { return }
+        guard let current = desktops.currentKey, desktops.desktop(forKey: current) != nil else { return }
         dock.setAutoHide(!prefs.dockDesktopKeys.contains(current))
     }
 }

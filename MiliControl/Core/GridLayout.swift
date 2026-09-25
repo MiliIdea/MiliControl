@@ -103,31 +103,64 @@ struct GridLayout: Codable, Equatable {
 
     // MARK: - Reconciliation
 
-    /// Brings the layout in line with the desktops that actually exist:
-    /// removes keys that no longer exist, keeps everything else exactly where
-    /// the user put it, and appends brand-new desktops to the end of the last
-    /// row (in system order). Duplicate keys are collapsed to their first slot.
-    func reconciled(with liveKeys: [String]) -> GridLayout {
+    /// Brings the layout in line with the spaces that actually exist:
+    ///   • keys that no longer exist are removed — unless `retaining` says to
+    ///     keep them (a fullscreen app that's out of fullscreen keeps its slot
+    ///     for when it comes back);
+    ///   • everything else stays exactly where the user put it;
+    ///   • brand-new keys are added in `liveKeys` order: those matching
+    ///     `besideNeighbor` right after the nearest earlier key (a new
+    ///     fullscreen app appears next to the desktop it came from), the rest
+    ///     at the end of the last row.
+    /// Duplicate keys are collapsed to their first slot.
+    func reconciled(with liveKeys: [String],
+                    retaining: (String) -> Bool = { _ in false },
+                    besideNeighbor: (String) -> Bool = { _ in false }) -> GridLayout {
         let live = Set(liveKeys)
         var seen = Set<String>()
         var newRows: [[String]] = rows.map { row in
             row.filter { key in
-                guard live.contains(key), !seen.contains(key) else { return false }
+                guard live.contains(key) || retaining(key), !seen.contains(key) else { return false }
                 seen.insert(key)
                 return true
             }
         }
         if newRows.isEmpty { newRows = [[]] }
-        let fresh = liveKeys.filter { !seen.contains($0) }
-        if !fresh.isEmpty {
-            // Unique-ify fresh keys too (liveKeys should already be unique).
-            var added = Set<String>()
-            for key in fresh where !added.contains(key) {
-                added.insert(key)
+
+        for (index, key) in liveKeys.enumerated() where !seen.contains(key) {
+            seen.insert(key)
+            if besideNeighbor(key),
+               let neighbor = liveKeys[..<index].last(where: { seen.contains($0) }),
+               let row = newRows.firstIndex(where: { $0.contains(neighbor) }),
+               let column = newRows[row].firstIndex(of: neighbor) {
+                newRows[row].insert(key, at: column + 1)
+            } else {
                 newRows[newRows.count - 1].append(key)
             }
         }
         return GridLayout(rows: newRows, rowNames: rowNames)
+    }
+
+    // MARK: - Native order
+
+    /// The same rows, each sorted by `order` (macOS's desktop number), so
+    /// moving right in a row always slides the way macOS animates it. Rows
+    /// keep their members; only the order inside each row changes. Keys
+    /// without an order keep their relative place at the end of the row.
+    func sortedWithinRows(by order: (String) -> Int?) -> GridLayout {
+        let sorted = rows.map { row -> [String] in
+            row.enumerated()
+                .sorted { a, b in
+                    switch (order(a.element), order(b.element)) {
+                    case let (x?, y?): return x != y ? x < y : a.offset < b.offset
+                    case (.some, nil): return true
+                    case (nil, .some): return false
+                    case (nil, nil): return a.offset < b.offset
+                    }
+                }
+                .map(\.element)
+        }
+        return GridLayout(rows: sorted, rowNames: rowNames)
     }
 
     // MARK: - Editing

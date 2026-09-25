@@ -13,8 +13,9 @@
 //      the destination highlighted; further arrow taps move the highlight
 //      without switching. Releasing ⌃⌥ switches once, straight there.
 //
-//  Switching always goes through macOS's own "Switch to Desktop N" shortcut
-//  (DesktopSwitcher), so every move is the native slide. About a second after
+//  Switching always goes through macOS itself (DesktopSwitcher): its "Switch
+//  to Desktop N" shortcut, or bringing a fullscreen app forward — so every
+//  move is the native slide. About a second after
 //  each switch we confirm you arrived, and say exactly what to fix if not.
 //
 
@@ -214,11 +215,11 @@ final class NavigationCoordinator {
         pendingKey = nil
 
         desktops.refresh()
-        guard let desktop = desktops.desktop(forKey: key) else {
+        guard let space = desktops.space(forKey: key) else {
             dismissHUD(after: 0.1)
             return
         }
-        if desktop.key == desktops.currentKey {
+        if space.key == desktops.currentKey {
             dismissHUD(after: 0.15)
             return
         }
@@ -229,7 +230,7 @@ final class NavigationCoordinator {
             hudVisible = false
             hud.hideImmediately()
         }
-        let outcome = switcher.switchTo(desktop, in: desktops, shortcuts: SymbolicHotKeys.read())
+        let outcome = switcher.switchTo(space, in: desktops, shortcuts: SymbolicHotKeys.read())
 
         switch outcome {
         case .sent(let slides):
@@ -238,19 +239,27 @@ final class NavigationCoordinator {
             let duration: TimeInterval = Self.slideDuration + Double(max(slides - 1, 0)) * 1.3
             snapshots.switchWillStart(duration: duration + 0.7)   // no previews mid-slide
             lastCommit = (key, Date().addingTimeInterval(duration))
-            log.debug("Switching to desktop \(desktop.number, privacy: .public) in \(slides, privacy: .public) slide(s)")
-            verifyArrival(at: key, number: desktop.number, after: duration + 0.6)
-            if slides > 1 { tipAboutShortcut(for: desktop.number, after: duration) }
+            log.debug("Switching to \(space.name, privacy: .public) in \(slides, privacy: .public) slide(s)")
+            // A fullscreen switch may fall back to stepping; allow for that.
+            let settle: TimeInterval = space.number == nil ? 2.5 : 0.6
+            verifyArrival(at: space, after: duration + settle)
+            if slides > 1, let number = space.number { tipAboutShortcut(for: number, after: duration) }
         case .notTrusted:
             hud.flash("MiliControl needs Accessibility access to switch desktops. Open MiliControl Settings to fix it.")
             onSetupProblem?()
-        case .unreachable(let number):
-            if SymbolicHotKeys.switchableDesktops.contains(number) {
+        case .unreachable:
+            switch space {
+            case .desktop(let desktop) where SymbolicHotKeys.switchableDesktops.contains(desktop.number):
+                let number = desktop.number
                 hud.flash("Can't reach Desktop \(number): give it a “Switch to Desktop \(number)” shortcut, or turn on “Move left/right a space”, in Keyboard Shortcuts ▸ Mission Control.",
                           duration: 5)
                 onSetupProblem?()
-            } else {
-                hud.flash("Desktop \(number) can't be reached — macOS supports switching to Desktops 1–16.")
+            case .desktop(let desktop):
+                hud.flash("Desktop \(desktop.number) can't be reached — macOS supports switching to Desktops 1–16.")
+            case .fullscreen(let fullscreen):
+                hud.flash("Can't reach \(fullscreen.title): its app didn't come forward, and “Move left/right a space” is off in Keyboard Shortcuts ▸ Mission Control.",
+                          duration: 5)
+                onSetupProblem?()
             }
         }
     }
@@ -274,15 +283,22 @@ final class NavigationCoordinator {
 
     /// Confirms the switch happened; if not, the shortcut is most likely off
     /// or remapped in a way we couldn't read.
-    private func verifyArrival(at key: String, number: Int, after delay: TimeInterval) {
+    private func verifyArrival(at space: GridSpace, after delay: TimeInterval) {
+        let key = space.key
         let work = DispatchWorkItem { [weak self] in
             guard let self = self, self.pendingKey == nil else { return }
             self.desktops.refresh()
             guard self.desktops.currentKey != key else { return }
             // A newer switch may have superseded this one.
             if let last = self.lastCommit, last.key != key { return }
-            self.log.error("Switch to desktop \(number, privacy: .public) did not happen")
-            self.hud.flash("Couldn't switch to Desktop \(number). Check “Switch to Desktop \(number)” in Keyboard Shortcuts, or open MiliControl Settings.")
+            self.log.error("Switch to \(space.name, privacy: .public) did not happen")
+            switch space {
+            case .desktop(let desktop):
+                let number = desktop.number
+                self.hud.flash("Couldn't switch to Desktop \(number). Check “Switch to Desktop \(number)” in Keyboard Shortcuts, or open MiliControl Settings.")
+            case .fullscreen(let fullscreen):
+                self.hud.flash("Couldn't switch to \(fullscreen.title). Check “When switching to an application, switch to a Space with its open windows” in Desktop & Dock, or open MiliControl Settings.")
+            }
             self.onSetupProblem?()
         }
         verifyWork = work
@@ -300,18 +316,18 @@ final class NavigationCoordinator {
     private func updateHUD() {
         guard let target = pendingKey else { return }
         let rows = layout.navigableRows()
-        let byKey = Dictionary(desktops.desktops.map { ($0.key, $0) }, uniquingKeysWith: { first, _ in first })
+
         let grid = layout.layout
         let previews = snapshots.isActive
         let images = previews ? snapshots.images : [:]
         let hudRows = rows.enumerated().compactMap { pair -> HUDRow? in
             let (index, row) = pair
             let cells = row.compactMap { key -> HUDCell? in
-                guard let desktop = byKey[key] else { return nil }
+                guard let space = desktops.space(forKey: key) else { return nil }
                 return HUDCell(key: key,
-                               number: desktop.number,
+                               number: space.number,
                                pid: desktops.apps[key]?.first?.pid,
-                               title: DesktopLabel.title(for: key, number: desktop.number, in: desktops),
+                               title: DesktopLabel.title(for: space, in: desktops),
                                snapshot: images[key])
             }
             return cells.isEmpty ? nil : HUDRow(id: index, name: grid.displayName(ofRow: index), cells: cells)

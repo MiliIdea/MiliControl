@@ -92,4 +92,46 @@ final class GridLayoutTests: XCTestCase {
         let r = l.reconciled(with: ["a", "b", "c", "new"])
         XCTAssertEqual(Array(r.rowNames.prefix(2)), ["Work", "Chat"])
     }
+
+    // MARK: - Native order
+
+    func testSortedWithinRowsKeepsMembershipAndNames() {
+        let numbers = ["a": 1, "b": 2, "c": 3, "d": 4, "e": 5]
+        let l = GridLayout(rows: [["c", "a"], ["e", "b", "d"]], rowNames: ["Home", "Work"])
+        let s = l.sortedWithinRows { numbers[$0] }
+        XCTAssertEqual(s.rows, [["a", "c"], ["b", "d", "e"]])
+        XCTAssertEqual(s.rowNames, ["Home", "Work"])
+    }
+
+    func testSortedWithinRowsPutsUnknownKeysLastInOrder() {
+        let numbers = ["a": 2, "b": 1]
+        let l = GridLayout(rows: [["x", "a", "y", "b"], []])
+        XCTAssertEqual(l.sortedWithinRows { numbers[$0] }.rows, [["b", "a", "x", "y"], []])
+    }
+
+    func testSortedWithinRowsIsIdempotent() {
+        let numbers = ["a": 1, "b": 2]
+        let l = GridLayout(rows: [["b", "a"]]).sortedWithinRows { numbers[$0] }
+        XCTAssertEqual(l, l.sortedWithinRows { numbers[$0] })
+    }
+
+    // MARK: - Fullscreen apps
+
+    func testReconcileRetainsDormantKeys() {
+        let l = GridLayout(rows: [["a", "fs:x"], ["b"]])
+        let r = l.reconciled(with: ["a", "b"], retaining: { $0.hasPrefix("fs:") })
+        XCTAssertEqual(r.rows, [["a", "fs:x"], ["b"]])
+    }
+
+    func testReconcilePlacesNewKeyBesideItsNeighbor() {
+        let l = GridLayout(rows: [["a", "b"], ["c"]])
+        let r = l.reconciled(with: ["a", "fs:x", "b", "c", "d"], besideNeighbor: { $0.hasPrefix("fs:") })
+        XCTAssertEqual(r.rows, [["a", "fs:x", "b"], ["c", "d"]])
+    }
+
+    func testReconcileNewKeyWithoutNeighborGoesLast() {
+        let l = GridLayout(rows: [["a"]])
+        let r = l.reconciled(with: ["fs:x", "a"], besideNeighbor: { $0.hasPrefix("fs:") })
+        XCTAssertEqual(r.rows, [["a", "fs:x"]])
+    }
 }

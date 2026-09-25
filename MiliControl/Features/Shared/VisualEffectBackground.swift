@@ -30,7 +30,12 @@ struct VisualEffectBackground: NSViewRepresentable {
 
 /// Tile/cell label helpers shared by the HUD and the editor.
 enum DesktopLabel {
-    static func title(for key: String, number: Int, in store: DesktopStore) -> String {
-        store.title(forKey: key) ?? "Desktop \(number)"
+    /// What's on it ("Google Chrome · Work", "Safari +2"), else its own name.
+    static func title(for space: GridSpace, in store: DesktopStore) -> String {
+        if let title = store.title(forKey: space.key) { return title }
+        switch space {
+        case .desktop(let desktop): return "Desktop \(desktop.number)"
+        case .fullscreen(let fullscreen): return fullscreen.title
+        }
     }
 }

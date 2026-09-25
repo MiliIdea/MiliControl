@@ -27,7 +27,11 @@
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSAppleEventsUsageDescription</key>
-	<string>MiliControl changes the Dock's auto-hide setting so the Dock only shows on the desktops you choose.</string>
+	<string>MiliControl shows what Spotify or Music is playing around the notch and lets you pause or skip from there. It also changes the Dock's auto-hide setting so the Dock only shows on the desktops you choose.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>MiliControl shows your upcoming events on the grid editor's dashboard. They never leave your Mac.</string>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>MiliControl shows your upcoming events on the grid editor's dashboard. They never leave your Mac.</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>© Milad Karimi</string>
 	<key>NSPrincipalClass</key>

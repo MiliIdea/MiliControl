@@ -1,148 +1,165 @@
+<div align="center">
+
+<img src="docs/images/icon.png" width="128" height="128" alt="MiliControl icon">
+
 # MiliControl
 
-Arrange your Mac's desktops into a **grid of rows** and move around it with the
-keyboard. Every move is macOS's own native slide — MiliControl decides *where*
-to go, macOS does the switch.
+**Your Mac's desktops, arranged in rows.**<br>
+Move through them with native macOS slides — plus a calm dashboard, a living notch, and your favourite sites, one shortcut away.
+
+[![Download](https://img.shields.io/github/v/release/MiliIdea/MiliControl?label=Download&style=for-the-badge&color=0A6BFF&logo=apple&logoColor=white)](https://github.com/MiliIdea/MiliControl/releases/latest)
+
+![macOS](https://img.shields.io/badge/macOS-13%2B-111?style=flat-square&logo=apple&logoColor=white)
+![Swift](https://img.shields.io/badge/Swift-5-F05138?style=flat-square&logo=swift&logoColor=white)
+![Apple silicon & Intel](https://img.shields.io/badge/Apple%20silicon%20%26%20Intel-universal-555?style=flat-square)
+![Notarized](https://img.shields.io/badge/signed%20%26%20notarized-✓-2EA043?style=flat-square)
+
+<br>
+
+<img src="docs/images/screenshot.png" alt="MiliControl's grid view: a dashboard with clock, month calendar with Persian dates, upcoming events, to-do list and sticky note, above three rows of desktops" width="100%">
+
+<sub>The grid view — <kbd>⌃</kbd> <kbd>↑</kbd></sub>
+
+</div>
+
+<br>
+
+## Why MiliControl
+
+macOS lines your desktops up in one long strip. MiliControl lets you group
+them into **rows** — *Home*, *Work*, *Side project* — and move around that
+grid with the keyboard. Every move is macOS's **own** slide: MiliControl
+decides *where* to go, macOS does the switch.
 
 ```
-Row 1:   [1] [2] [3]
-Row 2:   [4] [5] [6] [7] [8]
+Home        [1] [2]
+Batriders   [3] [4] [5]
+Touchzen    [6] [7] [8] [9]
 ```
 
-| Shortcut | Action |
+## What's inside
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### Grid navigation
+**⌃⌥ ← →** moves within a row, **⌃⌥ ↑ ↓** between rows. Tap to slide
+instantly; hold the arrow to see the whole grid and jump anywhere in one
+slide. Four-finger swipes work too.
+
+</td>
+<td width="50%" valign="top">
+
+### The grid view
+Every desktop — and every fullscreen app — as a live preview, with browser
+profiles ("Chrome · Work") on each tile. Drag desktops between rows, name
+your rows, click to go.
+
+</td>
+</tr>
+<tr>
+<td valign="top">
+
+### Dashboard
+Clock, a month calendar with your events (hover a day to see them), up next,
+a to-do list and a sticky note. Add a **second calendar** — Persian (Shamsi),
+Hijri, Hebrew and more — shown right beside the Gregorian date.
+
+</td>
+<td valign="top">
+
+### A living notch
+When Spotify or Apple Music plays, the notch widens with the artwork and a
+little wave. Hover for the full player. New Telegram, WhatsApp and Slack
+messages drop down from it too.
+
+</td>
+</tr>
+<tr>
+<td valign="top">
+
+### Web tabs
+Keep chess.com, YouTube, ChatGPT — any site — one click away inside the grid
+view. Pages stay exactly where you left them.
+
+</td>
+<td valign="top">
+
+### Light and native
+A menu-bar app with no Dock icon. Per-desktop Dock visibility, launch at
+login, and automatic updates. Everything stays on your Mac.
+
+</td>
+</tr>
+</table>
+
+## Get started
+
+1. **[Download the latest DMG](https://github.com/MiliIdea/MiliControl/releases/latest)**, open it and drag MiliControl onto **Applications**.
+2. Open MiliControl. Its **Settings** window shows a short setup checklist — follow it until everything is green (Accessibility, and a couple of Mission Control shortcuts).
+3. Press **⌃↑** to open the grid view and arrange your rows.
+
+MiliControl updates itself from then on (Settings ▸ Updates).
+
+## Shortcuts
+
+| Keys | What it does |
 |---|---|
-| **⌃⌥ ← / →** | Previous / next desktop **in the current row** (wraps within the row) |
-| **⌃⌥ ↑ / ↓** | Previous / next row (lands on the first desktop of that row, or the same column — your choice) |
-| **⌃↑** (or ⌃⌥Space) | Open the grid editor |
+| <kbd>⌃</kbd><kbd>⌥</kbd> <kbd>←</kbd> <kbd>→</kbd> | Previous / next desktop in the current row |
+| <kbd>⌃</kbd><kbd>⌥</kbd> <kbd>↑</kbd> <kbd>↓</kbd> | Previous / next row |
+| Hold the arrow | Show the grid · tap arrows to choose · release <kbd>⌃</kbd><kbd>⌥</kbd> to go |
+| <kbd>⌃</kbd><kbd>↑</kbd> (or <kbd>⌃</kbd><kbd>⌥</kbd><kbd>Space</kbd>) | Open the grid view |
+| <kbd>⌃</kbd><kbd>↓</kbd> or <kbd>Esc</kbd> | Close the grid view |
 
-What happens depends on how long you hold the **arrow**:
+## Good to know
 
-- **Tap** the arrow → instant slide to the next desktop, no overlay. Keep
-  holding ⌃⌥ and tap again to keep moving.
-- **Hold** the arrow 0.3 s → the grid appears. Tap arrows to choose,
-  release ⌃⌥ → one slide straight there (like ⌘-Tab).
+- **Up to 16 desktops** — macOS's own limit. Desktops 1–9 switch in one slide
+  out of the box; 10–16 need a shortcut each for that (Settings walks you
+  through it), and still work without one in a few slides.
+- **Order inside a row follows Mission Control**, so every slide goes the way
+  you move. Reorder desktops in Mission Control's top bar and the grid follows.
+- **Fullscreen apps** have tiles too (⤢). When an app leaves fullscreen, its
+  tile waits in its slot for next time.
+- **Privacy.** MiliControl never sends anything anywhere. Calendar access is
+  optional; previews and messages are read on your Mac and kept in memory.
+- **Why not the App Store?** MiliControl needs system access the App Store
+  doesn't allow. It's signed with a Developer ID and notarized by Apple.
 
-The grid is **your** arrangement: open the editor and drag desktops between
-rows, add or remove rows. It's saved automatically.
+## Build from source
 
----
+Requires Xcode 15+ on macOS 13+.
 
-## Install
-
-1. Open `MiliControl.xcodeproj` in Xcode 15 or later (macOS 13+).
-2. Press **⌘R**. After every successful build the scheme automatically
-   installs **/Applications/MiliControl.app** (quitting any running copy
-   first) and runs that installed copy.
-3. The Settings window opens with a setup checklist — follow it until
-   everything is green.
-
-> **Why /Applications?** Accessibility permission is tied to one stable copy
-> of the app. Installing to the same place on every build keeps the
-> permission working. Install log: `/tmp/MiliControl-install.log`.
-
-## One-time macOS setup
-
-The Settings window checks all of these live and has a button for each.
-
-1. **Accessibility** — System Settings ▸ Privacy & Security ▸ Accessibility ▸
-   enable **MiliControl**, then quit & reopen it. (Needed to send the switch
-   shortcut.)
-2. **Switch to Desktop N** — System Settings ▸ Keyboard ▸ Keyboard Shortcuts ▸
-   Mission Control ▸ check **Switch to Desktop 1 … N** for every desktop.
-3. **Automatically rearrange Spaces** — System Settings ▸ Desktop & Dock ▸
-   Mission Control ▸ **off** (otherwise macOS renumbers your desktops).
-4. **Mission Control ⌃↑** — uncheck **Mission Control** in Keyboard Shortcuts ▸
-   Mission Control, *or* choose ⌃⌥Space for the grid editor in MiliControl.
-
-### Recommended workflow
-
-One app per desktop, filling the screen (Window ▸ Fill, or ⌥-click the green
-button — not fullscreen). Pin each app to its desktop: right-click its Dock
-icon ▸ Options ▸ Assign To ▸ **This Desktop**.
-
-## Limitations (macOS, not MiliControl)
-
-- **Up to 16 desktops** (macOS's maximum). Desktops 1–9 switch in one slide
-  out of the box. Desktops 10–16 work immediately via a short multi-slide
-  route; give each a "Switch to Desktop N" shortcut (Settings ▸ Desktops
-  10–16 walks you through it) for one instant slide.
-- **Fullscreen apps aren't in the grid.** They aren't numbered desktops. Use
-  Fill-sized windows on regular desktops instead.
-- **Four-finger swipes** (optional, Settings ▸ Navigation) move through the
-  grid, but switch after the swipe rather than following your fingers — turn
-  macOS's own four-finger gestures off or set them to three fingers.
-- **Single display** is the supported setup.
-
-## How it works
-
-| Layer | Files |
-|---|---|
-| Rules (pure, tested) | `Core/GridLayout.swift`, `Core/Navigator.swift` |
-| macOS integration | `System/` — reads Spaces (read-only private CGS calls), reads your keyboard-shortcut table, sends "Switch to Desktop N", global hotkeys, setup checks |
-| Features | `Features/Navigation` (hotkeys → HUD → switch), `Features/GridEditor`, `Features/Settings`, `Features/MenuBar`, `Features/Updates` (Sparkle) |
-
-MiliControl never switches or modifies Spaces through private API — it only
-reads them — and never writes system preferences.
-
-## Download
-
-Get the latest DMG from
-[Releases](https://github.com/MiliIdea/MiliControl/releases/latest), open it
-and drag MiliControl onto Applications. After that MiliControl updates itself
-(Settings ▸ Updates).
-
-## Releasing
-
-Releases live on GitHub; each one has two assets — the notarized DMG and
-`appcast.xml`, the update feed. Installed copies read
-`releases/latest/download/appcast.xml`, so publishing a release is what ships
-the update. Updates are [Sparkle](https://sparkle-project.org), EdDSA-signed.
-
-### One-time setup
-
-1. Notarization credentials, stored in your Keychain (app-specific password
-   from appleid.apple.com):
-   ```bash
-   xcrun notarytool store-credentials "MiliControl-notary" \
-       --apple-id "you@example.com" --team-id "JK772YMH8E"
-   ```
-2. A **Developer ID Application** certificate in your *login* keychain:
-   Xcode ▸ Settings ▸ Accounts ▸ Manage Certificates ▸ + ▸ Developer ID
-   Application.
-3. The update-signing key and the GitHub CLI:
-   ```bash
-   Scripts/setup_updates.sh     # creates the key, writes the public key into Info.plist
-   brew install gh && gh auth login
-   ```
-   Back up the private key as the script explains — without it, installed
-   copies can't be updated.
-
-### Every release
-
-1. Bump **Version** and **Build** in Xcode (target ▸ General). The build
-   number must go up every time.
-2. Write `ReleaseNotes/<version>.md` (a few `- ` bullets), commit, `git push`.
-3. **Product ▸ Archive** ▸ Distribute App ▸ **Direct Distribution**; when it's
-   "Ready to distribute", **Export** to your Desktop.
-4. Publish:
-   ```bash
-   Scripts/release.sh ~/Desktop/MiliControl.app
-   ```
-   It checks versions and keys, builds the notarized DMG (`make_dmg.sh`),
-   writes the feed, asks once, then creates GitHub release `v<version>`.
-
-`Scripts/make_dmg.sh` alone builds just the installer. Installer artwork:
-`Design/dmg-background.svg` (rendered to `Scripts/dmg/background*.png`).
-
-> Share the **GitHub link**, not the DMG file itself over Telegram: files
-> saved by the App Store version of Telegram are tagged so macOS refuses to
-> open the app.
-
-## Development
+```bash
+git clone https://github.com/MiliIdea/MiliControl.git
+cd MiliControl
+open MiliControl.xcodeproj      # ⌘R builds and installs to /Applications
+```
 
 ```bash
 swift test                               # grid + navigation rules
 python3 Scripts/generate_project.py .    # regenerate the Xcode project after adding files
 ```
 
-Logs: Console.app, subsystem `com.mili.MiliControl`.
+Each build installs to **/Applications/MiliControl.app** so the Accessibility
+permission keeps working (install log: `/tmp/MiliControl-install.log`).
+Logs are in Console.app under the subsystem `com.mili.MiliControl`.
+
+| Layer | Where |
+|---|---|
+| Rules (pure, tested) | `Core/` — grid layout, navigation, route planning |
+| macOS integration | `System/` — spaces, shortcuts, switching, setup checks, media, messages |
+| Features | `Features/` — navigation & HUD, grid view, dashboard, notch, web tabs, settings, updates |
+
+Publishing a release: see [docs/RELEASING.md](docs/RELEASING.md).
+
+## Credits
+
+[Sparkle](https://sparkle-project.org) for updates ·
+[Vazirmatn](https://github.com/rastikerdar/vazirmatn) by Saber Rastikerdar for
+Persian text (SIL Open Font License).
+
+<div align="center">
+<br>
+<sub>Made with care by <a href="https://github.com/MiliIdea">Milad Karimi</a></sub>
+</div>

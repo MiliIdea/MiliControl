@@ -78,14 +78,18 @@ final class DesktopSnapshots: ObservableObject {
             .sink { [weak self] enabled in self?.setEnabled(enabled) }
             .store(in: &cancellables)
 
-        // Forget previews of desktops that no longer exist.
-        desktops.$desktops
+        // Forget previews of desktops and fullscreen apps that no longer exist.
+        desktops.$desktops.map { _ in () }
+            .merge(with: desktops.$fullscreens.map { _ in () })
             .receive(on: RunLoop.main)
-            .sink { [weak self] list in
-                guard let self = self else { return }
-                let live = Set(list.map(\.key))
-                let kept = self.images.filter { live.contains($0.key) }
-                if kept.count != self.images.count { self.images = kept }
+            .sink { [weak self] in
+                // `@Published` fires before storing; read the store next pass.
+                DispatchQueue.main.async {
+                    guard let self = self else { return }
+                    let live = Set(self.desktops.desktops.map(\.key) + self.desktops.fullscreens.map(\.key))
+                    let kept = self.images.filter { live.contains($0.key) }
+                    if kept.count != self.images.count { self.images = kept }
+                }
             }
             .store(in: &cancellables)
     }
@@ -155,8 +159,8 @@ final class DesktopSnapshots: ObservableObject {
             return
         }
         guard Date() >= quietUntil, !overlaysVisible(), !Self.isScreenLocked,
-              let key = desktops.currentKey,                    // nil = fullscreen app
-              let desktop = desktops.desktop(forKey: key) else { return }
+              let key = desktops.currentKey,                    // a desktop or fullscreen app
+              let desktop = desktops.space(forKey: key) else { return }
 
         isCapturing = true
         let generation = spaceGeneration

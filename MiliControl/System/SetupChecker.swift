@@ -57,6 +57,8 @@ final class SetupChecker: ObservableObject {
 
     struct Context {
         var desktops: [Desktop]
+        /// Fullscreen apps currently in the grid.
+        var fullscreenCount: Int = 0
         var gridShortcut: GridShortcut
         var hotKeyFailures: [String]
         var previewsEnabled: Bool
@@ -155,6 +157,20 @@ final class SetupChecker: ObservableObject {
             list.append(.init(id: "limit", title: "More than 16 desktops",
                               detail: "macOS can only switch to Desktops 1–16, so \(beyond.count) desktop(s) are skipped when navigating.",
                               status: .warning, fix: .noAction))
+        }
+
+        // 3d. Fullscreen apps are reached by bringing them forward, which only
+        //     slides to their space with this macOS setting on.
+        if context.fullscreenCount > 0 {
+            if Self.switchesSpaceOnActivate() {
+                list.append(.init(id: "fullscreen", title: "Fullscreen apps",
+                                  detail: "Switching to an app moves to its Space, so fullscreen apps are one slide away.",
+                                  status: .ok, fix: .noAction))
+            } else {
+                list.append(.init(id: "fullscreen", title: "Fullscreen apps",
+                                  detail: "Turn on “When switching to an application, switch to a Space with open windows for the application” (Desktop & Dock ▸ Mission Control). Until then fullscreen apps take a few slides.",
+                                  status: .warning, fix: .openDesktopAndDock))
+            }
         }
 
         // 4. Automatic rearranging only changes the number badges now (MiliControl
@@ -320,6 +336,16 @@ final class SetupChecker: ObservableObject {
     }
 
     // MARK: - Helpers
+
+    /// "When switching to an application, switch to a Space with open windows
+    /// for the application" — a global setting (older macOS kept it in the
+    /// Dock's domain). On unless explicitly turned off.
+    private static func switchesSpaceOnActivate() -> Bool {
+        if let global = UserDefaults.standard.object(forKey: "AppleSpacesSwitchOnActivate") as? Bool {
+            return global
+        }
+        return (SystemPreferences.value("workspaces-auto-swoosh", in: "com.apple.dock") as? NSNumber)?.boolValue ?? true
+    }
 
     /// nil when macOS's Dock settings couldn't be read.
     private static func dockRearrangesSpaces() -> Bool? {

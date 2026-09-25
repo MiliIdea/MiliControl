@@ -11,6 +11,10 @@
 //      shortcut desktop, then "Move left/right a space" steps. Each step is
 //      sent only after the previous slide has finished, so macOS never drops
 //      or merges them.
+//    • Fullscreen app (no desktop number, so no shortcut) → bring its window
+//      forward, which makes macOS slide to its space in one native slide. If
+//      that doesn't land there in time (e.g. the app also has windows here),
+//      fall back to the stepping route above.
 //
 //  Sending keystrokes requires Accessibility access. Without it macOS
 //  silently drops them, so we check first and report instead.
@@ -25,7 +29,7 @@ enum SwitchOutcome: Equatable {
     case notTrusted
     /// No shortcut to jump to it and "Move left/right a space" is off (or the
     /// desktop is beyond what macOS can switch to).
-    case unreachable(desktop: Int)
+    case unreachable
 }
 
 final class DesktopSwitcher {
@@ -55,18 +59,41 @@ final class DesktopSwitcher {
 
     deinit { cancelSequence() }
 
-    func switchTo(_ target: Desktop, in store: DesktopStore,
+    func switchTo(_ target: GridSpace, in store: DesktopStore,
                   shortcuts: [Int: SymbolicHotKey]) -> SwitchOutcome {
         guard isTrusted else { return .notTrusted }
         cancelSequence()                        // a new switch replaces any route in progress
 
+        switch target {
+        case .desktop(let desktop):
+            guard SymbolicHotKeys.switchableDesktops.contains(desktop.number),
+                  let combos = route(to: target, in: store, shortcuts: shortcuts) else { return .unreachable }
+            run(combos)
+            return .sent(slides: combos.count)
+
+        case .fullscreen(let fullscreen):
+            // Plan the fallback now, while we know where we are.
+            let fallback = route(to: target, in: store, shortcuts: shortcuts)
+            guard WindowActivator.bringForward(fullscreen.apps) else {
+                guard let combos = fallback else { return .unreachable }
+                run(combos)
+                return .sent(slides: combos.count)
+            }
+            watchActivation(landingOn: fullscreen.spaceID, store: store, shortcuts: shortcuts)
+            return .sent(slides: 1)
+        }
+    }
+
+    /// Key combos for the shortest route to `target` (Switch-to-Desktop jumps
+    /// and Move-left/right steps), or nil when there's none.
+    private func route(to target: GridSpace, in store: DesktopStore,
+                       shortcuts: [Int: SymbolicHotKey]) -> [KeyCombo]? {
         // "Move left/right a space" only moves within one display, so plan
         // on the target's display only.
         let strip = store.strips[target.displayID] ?? []
         let position: [CGSSpaceID: Int] = Dictionary(strip.enumerated().map { ($0.element, $0.offset) },
                                                      uniquingKeysWith: { first, _ in first })
-        guard SymbolicHotKeys.switchableDesktops.contains(target.number),
-              let to = position[target.spaceID] else { return .unreachable(desktop: target.number) }
+        guard let to = position[target.spaceID] else { return nil }
 
         var jumpTargets: [Int: Int] = [:]
         for desktop in store.desktops where desktop.displayID == target.displayID {
@@ -78,22 +105,50 @@ final class DesktopSwitcher {
         let left = SymbolicHotKeys.moveSpaceCombo(left: true, in: shortcuts)
         let right = SymbolicHotKeys.moveSpaceCombo(left: false, in: shortcuts)
 
-        guard let route = RoutePlanner.route(from: position[store.activeSpaceID], to: to,
-                                             targetNumber: target.number,
+        // Fullscreen apps have no number (0 never matches a jump target).
+        guard let steps = RoutePlanner.route(from: position[store.activeSpaceID], to: to,
+                                             targetNumber: target.number ?? 0,
                                              jumpTargets: jumpTargets,
                                              canStep: left != nil && right != nil)
-        else { return .unreachable(desktop: target.number) }
+        else { return nil }
 
-        let combos = route.compactMap { step -> KeyCombo? in
+        let combos = steps.compactMap { step -> KeyCombo? in
             switch step {
             case .jump(let number): return SymbolicHotKeys.usableSwitchCombo(forDesktop: number, in: shortcuts)
             case .left: return left
             case .right: return right
             }
         }
-        guard combos.count == route.count else { return .unreachable(desktop: target.number) }
-        run(combos)
-        return .sent(slides: combos.count)
+        return combos.count == steps.count ? combos : nil
+    }
+
+    // MARK: - Fullscreen activation
+
+    /// Longest we wait for activation to land on the fullscreen space.
+    private static let activationTimeout: TimeInterval = 0.9
+
+    /// After bringing a fullscreen window forward: done if macOS slides to
+    /// its space; otherwise (it stayed, or went elsewhere) step there instead.
+    private func watchActivation(landingOn spaceID: CGSSpaceID, store: DesktopStore,
+                                 shortcuts: [Int: SymbolicHotKey]) {
+        clearWaiters()
+        let id = sequenceID
+        let finish: () -> Void = { [weak self, weak store] in
+            guard let self = self, let store = store, self.sequenceID == id else { return }
+            self.clearWaiters()
+            store.refresh()
+            guard store.activeSpaceID != spaceID,
+                  let target = store.fullscreens.first(where: { $0.spaceID == spaceID }),
+                  let combos = self.route(to: .fullscreen(target), in: store, shortcuts: shortcuts)
+            else { return }
+            self.run(combos)
+        }
+        stepObserver = NSWorkspace.shared.notificationCenter.addObserver(
+            forName: NSWorkspace.activeSpaceDidChangeNotification,
+            object: nil, queue: .main) { _ in finish() }
+        let timeout = DispatchWorkItem { finish() }
+        stepTimeoutWork = timeout
+        DispatchQueue.main.asyncAfter(deadline: .now() + Self.activationTimeout, execute: timeout)
     }
 
     // MARK: - Multi-step routes

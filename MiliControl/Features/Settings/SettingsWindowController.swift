@@ -12,17 +12,20 @@ final class SettingsWindowController {
     private let setup: SetupChecker
     private let desktops: DesktopStore
     private let updates: UpdateController
+    private let dashboard: DashboardStore
     private let dockAvailable: Bool
     private let actions: SettingsActions
     private var window: NSWindow?
     private var keyObserver: NSObjectProtocol?
 
     init(prefs: Preferences, setup: SetupChecker, desktops: DesktopStore,
-         updates: UpdateController, dockAvailable: Bool, actions: SettingsActions) {
+         updates: UpdateController, dashboard: DashboardStore,
+         dockAvailable: Bool, actions: SettingsActions) {
         self.prefs = prefs
         self.setup = setup
         self.desktops = desktops
         self.updates = updates
+        self.dashboard = dashboard
         self.dockAvailable = dockAvailable
         self.actions = actions
     }
@@ -43,7 +46,8 @@ final class SettingsWindowController {
 
     private func makeWindow() -> NSWindow {
         let root = SettingsView(prefs: prefs, setup: setup, desktops: desktops,
-                                updates: updates, dockAvailable: dockAvailable, actions: actions)
+                                updates: updates, dashboard: dashboard,
+                                dockAvailable: dockAvailable, actions: actions)
         let window = NSWindow(contentViewController: NSHostingController(rootView: root))
         window.title = "MiliControl Settings"
         window.styleMask = [.titled, .closable, .miniaturizable]
@@ -56,6 +60,7 @@ final class SettingsWindowController {
         keyObserver = NotificationCenter.default.addObserver(
             forName: NSWindow.didBecomeKeyNotification, object: window, queue: .main) { [weak self] _ in
                 self?.actions.recheck()
+                self?.dashboard.refreshAccess()
             }
         return window
     }

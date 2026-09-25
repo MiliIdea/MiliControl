@@ -18,7 +18,8 @@ import AppKit
 
 struct HUDCell: Identifiable, Equatable {
     let key: String
-    let number: Int
+    /// Desktop number; nil for a fullscreen app.
+    let number: Int?
     let pid: pid_t?
     let title: String
     let snapshot: NSImage?
@@ -178,8 +179,15 @@ struct HUDView: View {
         }
     }
 
-    private func numberBadge(_ number: Int, onPreview: Bool, highlighted: Bool) -> some View {
-        Text("\(number)")
+    /// The desktop number, or a fullscreen symbol for a fullscreen app.
+    private func numberBadge(_ number: Int?, onPreview: Bool, highlighted: Bool) -> some View {
+        Group {
+            if let number = number {
+                Text("\(number)")
+            } else {
+                Image(systemName: "arrow.up.left.and.arrow.down.right")
+            }
+        }
             .font(.system(size: 9, weight: .bold).monospacedDigit())
             .foregroundStyle(onPreview || highlighted ? Color.white : Color.secondary)
             .padding(.horizontal, onPreview ? 5 : 0)

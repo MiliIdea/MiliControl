@@ -31,7 +31,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // (e.g. snapshots ↔ editor), and without annotations Swift's type
     // inference reports a circular reference.
 
-    private lazy var layout: LayoutStore = LayoutStore(desktops: desktops)
+    private lazy var layout: LayoutStore = LayoutStore(desktops: desktops, prefs: prefs)
 
     private lazy var dock: DockCoordinator = DockCoordinator(desktops: desktops, prefs: prefs, dock: DockController())
 
@@ -42,16 +42,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             return self.hud.isVisible || self.editor.isVisible
         })
 
+    private lazy var dashboard: DashboardStore = DashboardStore(prefs: prefs)
+
     private lazy var navigation: NavigationCoordinator = NavigationCoordinator(
         desktops: desktops, layout: layout, prefs: prefs, switcher: switcher, hud: hud,
         snapshots: snapshots)
 
     private lazy var editor: GridEditorController = GridEditorController(
         desktops: desktops, layout: layout, prefs: prefs, navigation: navigation,
-        snapshots: snapshots)
+        snapshots: snapshots, dashboard: dashboard, webTabs: webTabs)
+
+    private lazy var webTabs: WebTabsStore = WebTabsStore(prefs: prefs)
 
     private lazy var settings: SettingsWindowController = SettingsWindowController(
-        prefs: prefs, setup: setup, desktops: desktops, updates: updates, dockAvailable: dock.isAvailable,
+        prefs: prefs, setup: setup, desktops: desktops, updates: updates, dashboard: dashboard,
+        dockAvailable: dock.isAvailable,
         actions: SettingsActions(
             recheck: { [weak self] in self?.runSetupCheck() },
             perform: { [weak self] fix in
@@ -63,9 +68,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             copyDiagnostics: { [weak self] in
                 guard let self = self else { return }
                 let report = self.setup.diagnostics(desktops: self.desktops.desktops)
+                    + "\n\n" + self.messages.diagnostics
                 NSPasteboard.general.clearContents()
                 NSPasteboard.general.setString(report, forType: .string)
             }))
+
+    private let nowPlaying = NowPlaying()
+    private let messages = MessageMonitor()
+
+    private lazy var notch: NotchController = NotchController(
+        nowPlaying: nowPlaying, prefs: prefs, messages: messages,
+        openApp: { [weak self] app in
+            // From the notch over the grid editor: close the editor, then go.
+            if self?.editor.isVisible == true {
+                self?.editor.hide()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { app.open() }
+            } else {
+                app.open()
+            }
+        })
 
     private let swipes = TrackpadSwipes.shared
     private var wakeObserver: NSObjectProtocol?
@@ -83,17 +104,29 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)   // menu-bar utility, no Dock icon
+        AppFonts.registerBundled()
 
         navigation.editorRouter = { [weak self] direction in
             self?.editor.moveSelection(direction) ?? false
         }
         navigation.onSetupProblem = { [weak self] in self?.runSetupCheck() }
         editor.onOpenSettings = { [weak self] in self?.settings.show() }
+        editor.onVisibilityChange = { [weak self] visible in self?.notch.editorVisible = visible }
 
         registerHotKeys()
         statusBar.install()
         dock.start()
         snapshots.start()
+        notch.start()
+
+        // Unread messages (Telegram, WhatsApp, Slack) for the notch and dashboard.
+        prefs.$messagesEnabled
+            .removeDuplicates()
+            .receive(on: RunLoop.main)
+            .sink { [weak self] enabled in
+                if enabled { self?.messages.start() } else { self?.messages.stop() }
+            }
+            .store(in: &cancellables)
 
         prefs.$showPreviews
             .dropFirst()
@@ -137,6 +170,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 self?.runSetupCheck()
                 self?.announceDesktopsNeedingShortcuts()
             }
+            .store(in: &cancellables)
+
+        desktops.$fullscreens
+            .map(\.isEmpty)
+            .removeDuplicates()
+            .dropFirst()
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in self?.runSetupCheck() }
             .store(in: &cancellables)
 
         runSetupCheck()
@@ -212,6 +253,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func runSetupCheck() {
         setup.run(SetupChecker.Context(desktops: desktops.desktops,
+                                       fullscreenCount: desktops.fullscreens.count,
                                        gridShortcut: prefs.gridShortcut,
                                        hotKeyFailures: hotKeys.failures,
                                        previewsEnabled: prefs.showPreviews,

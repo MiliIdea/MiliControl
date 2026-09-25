@@ -30,10 +30,10 @@ def uid(*parts):
 
 # Group tree: (group name, relative path, children); children are file names or nested groups
 tree = ("MiliControl", "MiliControl", [
-    ("App", "App", ["main.swift", "AppDelegate.swift", "Preferences.swift", "LayoutStore.swift"]),
+    ("App", "App", ["main.swift", "AppDelegate.swift", "Preferences.swift", "LayoutStore.swift", "AppFonts.swift"]),
     ("Core", "Core", ["GridLayout.swift", "Navigator.swift", "RoutePlanner.swift"]),
     ("System", "System", ["CGSPrivate.swift", "DesktopStore.swift", "SymbolicHotKeys.swift",
-                          "DesktopSwitcher.swift", "HotKeyCenter.swift", "SetupChecker.swift", "LoginItem.swift", "DockController.swift", "ScreenCapture.swift", "SystemPreferences.swift", "TrackpadSwipes.swift"]),
+                          "DesktopSwitcher.swift", "HotKeyCenter.swift", "SetupChecker.swift", "LoginItem.swift", "DockController.swift", "ScreenCapture.swift", "SystemPreferences.swift", "TrackpadSwipes.swift", "BrowserProfiles.swift", "WindowActivator.swift", "NowPlaying.swift", "MessageMonitor.swift"]),
     ("Features", "Features", [
         ("Shared", "Shared", ["VisualEffectBackground.swift"]),
         ("Navigation", "Navigation", ["NavigationCoordinator.swift", "HUD.swift"]),
@@ -43,8 +43,13 @@ tree = ("MiliControl", "MiliControl", [
         ("Dock", "Dock", ["DockCoordinator.swift"]),
         ("Previews", "Previews", ["DesktopSnapshots.swift"]),
         ("Updates", "Updates", ["UpdateController.swift"]),
+        ("Dashboard", "Dashboard", ["DashboardStore.swift", "TodoStore.swift", "DashboardView.swift"]),
+        ("Notch", "Notch", ["NotchController.swift", "NotchView.swift"]),
+        ("WebTabs", "WebTabs", ["WebTabs.swift", "WebTabViews.swift"]),
     ]),
-    ("Resources", "Resources", ["Assets.xcassets", "Info.plist", "MiliControl.entitlements"]),
+    ("Resources", "Resources", ["Assets.xcassets", "Info.plist", "MiliControl.entitlements"]
+        # Bundled fonts (a folder reference, copied as Contents/Resources/Fonts).
+        + (["Fonts"] if os.path.isdir(os.path.join(ROOT, "MiliControl/Resources/Fonts")) else [])),
 ])
 
 filerefs, buildfiles, groups = [], [], []
@@ -55,6 +60,7 @@ def ftype(name):
     if name.endswith(".xcassets"): return "folder.assetcatalog"
     if name.endswith(".plist"): return "text.plist.xml"
     if name.endswith(".entitlements"): return "text.plist.entitlements"
+    if name == "Fonts": return "folder"
     return "text"
 
 def walk(node, fs_path):
@@ -75,7 +81,7 @@ def walk(node, fs_path):
                 bid = uid("build", fpath)
                 buildfiles.append(f'\t\t{bid} /* {c} in Sources */ = {{isa = PBXBuildFile; fileRef = {fid} /* {c} */; }};')
                 sources.append((bid, c))
-            elif c.endswith(".xcassets"):
+            elif c.endswith(".xcassets") or c == "Fonts":
                 bid = uid("build", fpath)
                 buildfiles.append(f'\t\t{bid} /* {c} in Resources */ = {{isa = PBXBuildFile; fileRef = {fid} /* {c} */; }};')
                 resources.append((bid, c))
