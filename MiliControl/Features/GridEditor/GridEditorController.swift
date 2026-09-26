@@ -113,6 +113,10 @@ final class GridEditorController {
         window.hasShadow = false
         window.isReleasedWhenClosed = false
         window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .stationary, .ignoresCycle]
+        // Always dark, like Mission Control: the grid sits on a dimmed blur of
+        // your desktop, and its cards, previews and dashboard are designed
+        // for that. (Web tabs still follow your system appearance.)
+        window.appearance = NSAppearance(named: .darkAqua)
 
         let root = GridEditorView(
             model: model,
@@ -151,7 +155,7 @@ final class GridEditorController {
                 }))
         // NSHostingController (not a bare NSHostingView) owns sizing — avoids
         // AppKit layout-recursion warnings in borderless windows.
-        window.contentViewController = NSHostingController(rootView: root)
+        window.contentViewController = NSHostingController(rootView: root.environment(\.colorScheme, .dark))
         window.setFrame(screen.frame, display: true)
 
         NSApp.activate(ignoringOtherApps: true)

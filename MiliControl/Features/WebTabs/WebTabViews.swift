@@ -142,6 +142,8 @@ struct WebViewHost: NSViewRepresentable {
 
     private func attach(to container: NSView) {
         webView.removeFromSuperview()
+        // The grid view is always dark; sites follow your system appearance.
+        webView.appearance = NSApp.effectiveAppearance
         webView.translatesAutoresizingMaskIntoConstraints = false
         container.addSubview(webView)
         NSLayoutConstraint.activate([
