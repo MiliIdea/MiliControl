@@ -21,6 +21,10 @@
 set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/lib/common.sh"
 
+# --publish-only: upload the DMG + feed already in dist/ (after an earlier
+# run that built them but didn't publish).
+PUBLISH_ONLY=0
+if [[ "${1:-}" == "--publish-only" ]]; then PUBLISH_ONLY=1; shift; fi
 APP="${1:-$HOME/Desktop/MiliControl.app}"
 FEED="https://github.com/$REPO/releases/latest/download/appcast.xml"
 
@@ -72,8 +76,15 @@ COMMIT="$(git -C "$ROOT" rev-parse HEAD)"
 ok "Commit ${COMMIT:0:7} is on GitHub"
 
 # ---------------------------------------------------------------------------
-"$SCRIPTS_DIR/make_dmg.sh" "$APP"
 DMG="$ROOT/dist/MiliControl-$VERSION.dmg"
+APPCAST="$ROOT/dist/appcast.xml"
+if [[ "$PUBLISH_ONLY" == "1" ]]; then
+    [[ -f "$DMG" && -f "$APPCAST" ]] || fail "No built release in dist/ for $VERSION — run without --publish-only."
+    grep -q "<sparkle:version>$BUILD</sparkle:version>" "$APPCAST" \
+        || fail "dist/appcast.xml isn't for build $BUILD — run without --publish-only."
+    ok "Using dist/$(basename "$DMG") and dist/appcast.xml"
+else
+"$SCRIPTS_DIR/make_dmg.sh" "$APP"
 [[ -f "$DMG" ]] || fail "make_dmg.sh didn't produce $DMG"
 
 # ---------------------------------------------------------------------------
@@ -128,12 +139,25 @@ if command -v xmllint >/dev/null; then
     xmllint --noout "$APPCAST" || fail "dist/appcast.xml isn't valid XML."
 fi
 ok "dist/appcast.xml"
+fi
 
 # ---------------------------------------------------------------------------
 step "Publishing"
 printf "  Release %s on github.com/%s with:\n    %s\n    appcast.xml\n" "$TAG" "$REPO" "$(basename "$DMG")"
-read -r -p "  Publish now? Everyone with MiliControl will be offered it. [y/N] " ANSWER
-[[ "$ANSWER" =~ ^[Yy]$ ]] || { warn "Not published. Files are in dist/."; exit 0; }
+# Ask on the terminal itself: earlier steps (notarization, Finder scripting)
+# can swallow keys typed ahead on stdin. RELEASE_YES=1 skips the question.
+if [[ "${RELEASE_YES:-0}" != "1" ]]; then
+    # Drop anything typed while the build was running, then ask.
+    while read -r -t 1 -n 1000 _ < /dev/tty; do :; done    # (whole seconds: macOS bash 3.2)
+    printf "  Publish now? Everyone with MiliControl will be offered it. [y/N] "
+    read -r ANSWER < /dev/tty || ANSWER=""
+    ANSWER="$(printf "%s" "$ANSWER" | tr -d '[:space:]' | tr '[:upper:]' '[:lower:]')"
+    if [[ "$ANSWER" != "y" && "$ANSWER" != "yes" ]]; then
+        warn "Not published. Files are in dist/ — publish them without rebuilding:"
+        printf "    Scripts/release.sh --publish-only\n"
+        exit 0
+    fi
+fi
 
 gh release create "$TAG" "$DMG" "$APPCAST" \
     --repo "$REPO" --target "$COMMIT" \
