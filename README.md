@@ -13,6 +13,7 @@ Move through them with native macOS slides — plus a calm dashboard, a living n
 ![Swift](https://img.shields.io/badge/Swift-5-F05138?style=flat-square&logo=swift&logoColor=white)
 ![Apple silicon & Intel](https://img.shields.io/badge/Apple%20silicon%20%26%20Intel-universal-555?style=flat-square)
 ![Notarized](https://img.shields.io/badge/signed%20%26%20notarized-✓-2EA043?style=flat-square)
+![License](https://img.shields.io/badge/license-MIT-2EA043?style=flat-square)
 
 <br>
 
@@ -158,6 +159,10 @@ Publishing a release: see [docs/RELEASING.md](docs/RELEASING.md).
 [Sparkle](https://sparkle-project.org) for updates ·
 [Vazirmatn](https://github.com/rastikerdar/vazirmatn) by Saber Rastikerdar for
 Persian text (SIL Open Font License).
+
+## License
+
+MiliControl is open source under the [MIT License](LICENSE).
 
 <div align="center">
 <br>
