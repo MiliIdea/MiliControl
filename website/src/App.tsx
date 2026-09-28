@@ -1,5 +1,5 @@
 import { MotionConfig } from 'motion/react'
-import { FAQ, FinalCTA, Footer, GetStarted } from './components/Closing'
+import { FAQ, Developer, FinalCTA, Footer, GetStarted } from './components/Closing'
 import { Hero } from './components/Hero'
 import { Nav } from './components/Nav'
 import { NotchSection } from './components/NotchSection'
@@ -22,6 +22,7 @@ export default function App() {
         <GetStarted />
         <FAQ />
         <FinalCTA />
+        <Developer />
       </main>
       <Footer />
     </MotionConfig>

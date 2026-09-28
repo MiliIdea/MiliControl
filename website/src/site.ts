@@ -7,6 +7,7 @@ export const site = {
   /** Fallback until the latest DMG's direct link is fetched (see useDownloadURL). */
   download: 'https://github.com/MiliIdea/MiliControl/releases/latest',
   minimumMacOS: 'macOS 13',
+  developer: { name: 'Milad Karimi', url: 'https://mili.today/' },
 } as const
 
 export const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`
