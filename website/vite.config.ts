@@ -2,8 +2,7 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
-// Served from GitHub Pages at https://miliidea.github.io/MiliControl/
+// Served by Vercel at https://control.mili.today/
 export default defineConfig({
-  base: '/MiliControl/',
   plugins: [react(), tailwindcss()],
 })

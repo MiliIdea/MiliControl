@@ -1,7 +1,7 @@
 /** Everything that changes between releases lives here. */
 export const site = {
   name: 'MiliControl',
-  url: 'https://miliidea.github.io/MiliControl/',
+  url: 'https://control.mili.today/',
   repo: 'https://github.com/MiliIdea/MiliControl',
   repoPath: 'MiliIdea/MiliControl',
   /** Fallback until the latest DMG's direct link is fetched (see useDownloadURL). */
